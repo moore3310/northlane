@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northlane Secure Banking</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-brand">
+      <span class="brand-mark">N</span>
+      <div>
+        <strong>Northlane Secure Banking</strong>
+        <small>Secure sign in</small>
+      </div>
+    </div>
+    <div class="login-layout">
+      <div class="login-copy">
+        <span class="status-pill">Secure banking portal</span>
+        <h1>Personal banking with full account controls.</h1>
+        <p>Access a secure profile with accounts, transfers, bill pay, card controls, alerts, and profile settings.</p>
+      </div>
+      <form class="login-card" id="loginForm">
+        <div>
+          <h2>Sign In</h2>
+          <p>Sign in with your Northlane credentials.</p>
+        </div>
+        <label>
+          User ID
+          <input id="loginUser" autocomplete="off" value="alex.morgan" required>
+        </label>
+        <label>
+          Password
+          <input id="loginPassword" type="password" autocomplete="off" value="Northlane2026" required>
+        </label>
+        <div class="login-row">
+          <label class="check-row"><input type="checkbox" checked> Remember user ID</label>
+          <button class="text-btn" type="button" id="fillCredentials">Use saved ID</button>
+        </div>
+        <button class="primary-btn" type="submit">Sign In</button>
+        <p class="form-message" id="loginMessage" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <div class="app-shell locked" id="appShell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <a class="brand" href="#dashboard" data-page="dashboard" aria-label="Northlane Bank home">
+        <span class="brand-mark">N</span>
+        <span>
+          <strong>Northlane</strong>
+          <small>Secure Banking</small>
+        </span>
+      </a>
+
+      <nav class="nav-links">
+        <button class="nav-link active" data-page="dashboard" type="button">
+          <span aria-hidden="true">DB</span> Dashboard
+        </button>
+        <button class="nav-link" data-page="accounts" type="button">
+          <span aria-hidden="true">AC</span> Accounts
+        </button>
+        <button class="nav-link" data-page="transfer" type="button">
+          <span aria-hidden="true">TX</span> Transfer
+        </button>
+        <button class="nav-link" data-page="cards" type="button">
+          <span aria-hidden="true">CA</span> Cards
+        </button>
+        <button class="nav-link" data-page="bills" type="button">
+          <span aria-hidden="true">BI</span> Bills
+        </button>
+        <button class="nav-link" data-page="security" type="button">
+          <span aria-hidden="true">SE</span> Security
+        </button>
+      </nav>
+
+      <section class="contact-box" aria-label="Contact Northlane Bank">
+        <strong>Contact Northlane Bank</strong>
+        <p>Account services are available 24/7.</p>
+        <button class="secondary-btn" type="button" id="contactBankBtn">Contact</button>
+      </section>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" type="button" aria-label="Open menu">Menu</button>
+        <div>
+          <p class="eyebrow">Personal Banking</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search">
+            <span aria-hidden="true">Q</span>
+            <input id="searchInput" type="search" placeholder="Search transactions">
+          </label>
+          <button class="icon-btn" type="button" aria-label="Notifications">!</button>
+          <button class="profile-btn" type="button" data-page="security">
+            <span id="profileInitials">AM</span>
+            <strong id="profileName">Alex Morgan</strong>
+          </button>
+          <button class="secondary-btn" type="button" id="logoutBtn">Sign Out</button>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboard" aria-labelledby="dashboard-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="dashboard-title">Financial Overview</h2>
+            <p>Balances, spending, quick actions, and recent account activity.</p>
+          </div>
+          <button class="primary-btn" type="button" data-page="transfer">New Transfer</button>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric">
+            <span>Portfolio</span>
+            <strong id="totalBalance">Hidden</strong>
+            <small><button class="text-btn inline-text-btn" type="button" id="toggleBalance">Show balance</button></small>
+          </article>
+          <article class="metric">
+            <span>Monthly Income</span>
+            <strong>$8,420.00</strong>
+            <small class="positive">+6.8% from last month</small>
+          </article>
+          <article class="metric">
+            <span>Monthly Spend</span>
+            <strong>$3,184.29</strong>
+            <small class="negative">Dining and travel increased</small>
+          </article>
+          <article class="metric">
+            <span>Credit Available</span>
+            <strong>$17,250.00</strong>
+            <small>72% available</small>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Accounts</h3>
+              <button class="text-btn" type="button" data-page="accounts">View all</button>
+            </div>
+            <div class="account-list" id="accountList"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <h3>Spending Snapshot</h3>
+              <span class="status-pill">May 2026</span>
+            </div>
+            <div class="bars" id="spendingBars"></div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Recent Transactions</h3>
+            <button class="text-btn" type="button" id="exportBtn">Export CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Account</th>
+                  <th class="num">Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="transactionRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="page" id="accounts" aria-labelledby="accounts-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="accounts-title">Accounts</h2>
+            <p>Review balances, routing details, limits, and account health.</p>
+          </div>
+          <button class="primary-btn" type="button" id="openAccountBtn">Open New Account</button>
+        </div>
+        <div class="account-card-grid" id="accountCards"></div>
+        <article class="panel history-panel">
+          <div class="panel-head">
+            <h3>Transaction History</h3>
+            <span class="status-pill">All activity</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Description</th>
+                  <th>Category</th>
+                  <th>Account</th>
+                  <th class="num">Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="historyRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="page" id="transfer" aria-labelledby="transfer-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="transfer-title">Transfer Money</h2>
+            <p>Move money between accounts or send to saved recipients.</p>
+          </div>
+        </div>
+        <div class="form-layout">
+          <form class="panel form-panel" id="transferForm">
+            <label>
+              From account
+              <select id="fromAccount" required></select>
+            </label>
+            <label>
+              To recipient
+              <select id="toRecipient" required>
+                <option>Internal Savings</option>
+                <option>Jordan Lee - Checking</option>
+                <option>City Utilities</option>
+                <option>Northlane Credit Card</option>
+                <option value="external">External recipient</option>
+              </select>
+            </label>
+            <div class="external-fields" id="externalFields" hidden>
+              <label>
+                Recipient name
+                <input id="externalName" type="text" maxlength="60" placeholder="Recipient or business name">
+              </label>
+              <div class="split-row">
+                <label>
+                  Routing number
+                  <input id="externalRouting" inputmode="numeric" maxlength="9" placeholder="9 digits">
+                </label>
+                <label>
+                  Account number
+                  <input id="externalAccount" inputmode="numeric" maxlength="17" placeholder="Account number">
+                </label>
+              </div>
+            </div>
+            <label>
+              Amount
+              <input id="transferAmount" type="number" min="1" step="0.01" placeholder="0.00" required>
+            </label>
+            <label>
+              Memo
+              <input id="transferMemo" type="text" maxlength="60" placeholder="Optional note">
+            </label>
+            <div class="split-row">
+              <label>
+                Date
+                <input id="transferDate" type="date" required>
+              </label>
+              <label>
+                Frequency
+                <select id="frequency">
+                  <option>One time</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </label>
+            </div>
+            <button class="primary-btn" type="submit">Review Transfer</button>
+          </form>
+
+          <aside class="panel summary-panel">
+            <h3>Transfer Preview</h3>
+            <dl>
+              <div><dt>Fee</dt><dd>$0.00</dd></div>
+              <div><dt>Estimated arrival</dt><dd>2 to 3 business days</dd></div>
+              <div><dt>Daily limit</dt><dd>$10,000.00</dd></div>
+              <div><dt>Security check</dt><dd>Enabled</dd></div>
+            </dl>
+            <p id="transferMessage" class="form-message" aria-live="polite"></p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="page" id="cards" aria-labelledby="cards-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="cards-title">Cards</h2>
+            <p>Manage debit and credit cards, limits, and controls.</p>
+          </div>
+          <button class="primary-btn" type="button" id="requestCardBtn">Request Card</button>
+        </div>
+        <div class="card-grid" id="bankCards"></div>
+      </section>
+
+      <section class="page" id="bills" aria-labelledby="bills-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="bills-title">Bills & Payments</h2>
+            <p>Track scheduled payees, due dates, autopay, and payment status.</p>
+          </div>
+        </div>
+        <form class="panel form-panel payee-form" id="payeeForm">
+          <div class="split-row">
+            <label>
+              Payee name
+              <input id="payeeName" type="text" maxlength="60" placeholder="Company or person" required>
+            </label>
+            <label>
+              Amount
+              <input id="payeeAmount" type="number" min="1" step="0.01" placeholder="0.00" required>
+            </label>
+          </div>
+          <div class="split-row">
+            <label>
+              Due date
+              <input id="payeeDueDate" type="date" required>
+            </label>
+            <label>
+              Payment status
+              <select id="payeeStatus">
+                <option>Scheduled</option>
+                <option>Autopay on</option>
+                <option>Needs review</option>
+              </select>
+            </label>
+          </div>
+          <button class="primary-btn" type="submit">Add Payee</button>
+          <p class="form-message" id="payeeMessage" aria-live="polite"></p>
+        </form>
+        <div class="bill-list" id="billList"></div>
+      </section>
+
+      <section class="page" id="security" aria-labelledby="security-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="security-title">Profile & Security</h2>
+            <p>Customer profile, preferences, authentication, and alerts.</p>
+          </div>
+          <button class="primary-btn" type="button" id="saveSecurityBtn">Save Changes</button>
+        </div>
+        <div class="content-grid">
+          <article class="panel">
+            <h3>Customer Profile</h3>
+            <div class="profile-list">
+              <div><span>Full name</span><strong>Alex Morgan</strong></div>
+              <div><span>Email</span><strong>alex.morgan@example.test</strong></div>
+              <div><span>Phone</span><strong>(555) 014-2288</strong></div>
+              <div><span>Address</span><strong>1240 Market Street, Seattle, WA</strong></div>
+              <div><span>Customer ID</span><strong>NB-482910</strong></div>
+            </div>
+          </article>
+          <article class="panel">
+            <h3>Security Controls</h3>
+            <div class="settings">
+              <label><input type="checkbox" checked> Two-factor authentication</label>
+              <label><input type="checkbox" checked> Login alerts</label>
+              <label><input type="checkbox"> International transfers</label>
+              <label><input type="checkbox" checked> Card transaction alerts</label>
+            </div>
+            <button class="secondary-btn" type="button">Change Password</button>
+          </article>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        Private development environment. Use only placeholder financial data.
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-card">
+      <h2 id="modalTitle">Action Complete</h2>
+      <p id="modalText">Your request was processed.</p>
+      <button class="primary-btn" type="button" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
