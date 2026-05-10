@@ -38,78 +38,32 @@
     }
   ],
   "transactions": [
-    {
-      "date": "May 10, 2026",
-      "description": "Transfer to real",
-      "category": "External Transfer",
-      "account": "Everyday Checking",
-      "amount": -2500.03,
-      "status": "Processing"
-    },
-    {
-      "date": "May 10, 2026",
-      "description": "History persistence test",
-      "category": "External Transfer",
-      "account": "Everyday Checking",
-      "amount": -7.77,
-      "status": "Processing"
-    },
-    {
-      "date": "May 9, 2026",
-      "description": "Payroll Deposit",
-      "category": "Income",
-      "account": "Everyday Checking",
-      "amount": 4210,
-      "status": "Posted"
-    },
-    {
-      "date": "May 8, 2026",
-      "description": "Pacific Market",
-      "category": "Groceries",
-      "account": "Rewards Credit",
-      "amount": -86.42,
-      "status": "Posted"
-    },
-    {
-      "date": "May 7, 2026",
-      "description": "City Utilities",
-      "category": "Bills",
-      "account": "Everyday Checking",
-      "amount": -142.18,
-      "status": "Scheduled"
-    },
-    {
-      "date": "May 6, 2026",
-      "description": "Transfer to Savings",
-      "category": "Transfer",
-      "account": "Growth Savings",
-      "amount": 800,
-      "status": "Posted"
-    },
-    {
-      "date": "May 5, 2026",
-      "description": "Northline Rail",
-      "category": "Travel",
-      "account": "Rewards Credit",
-      "amount": -44.9,
-      "status": "Posted"
-    },
-    {
-      "date": "May 4, 2026",
-      "description": "CloudDesk Software",
-      "category": "Business",
-      "account": "Everyday Checking",
-      "amount": -29.99,
-      "status": "Posted"
-    },
-    {
-      "date": "May 3, 2026",
-      "description": "Blue Harbor Cafe",
-      "category": "Dining",
-      "account": "Rewards Credit",
-      "amount": -61.72,
-      "status": "Posted"
-    }
+    { "date": "May 10, 2026", "description": "External account transfer", "category": "External Transfer", "account": "Everyday Checking", "amount": -2500.03, "status": "Processing" },
+    { "date": "May 9, 2026", "description": "Payroll Deposit", "category": "Income", "account": "Everyday Checking", "amount": 8420, "status": "Posted" },
+    { "date": "May 8, 2026", "description": "Pacific Market", "category": "Groceries", "account": "Rewards Credit", "amount": -86.42, "status": "Posted" },
+    { "date": "May 7, 2026", "description": "City Utilities", "category": "Bills", "account": "Everyday Checking", "amount": -142.18, "status": "Posted" },
+    { "date": "May 6, 2026", "description": "Northline Rail", "category": "Travel", "account": "Rewards Credit", "amount": -44.9, "status": "Posted" },
+    { "date": "May 4, 2026", "description": "CloudDesk Software", "category": "Business", "account": "Everyday Checking", "amount": -29.99, "status": "Posted" },
+    { "date": "May 3, 2026", "description": "Blue Harbor Cafe", "category": "Dining", "account": "Rewards Credit", "amount": -61.72, "status": "Posted" },
+    { "date": "Apr 30, 2026", "description": "Payroll Deposit", "category": "Income", "account": "Everyday Checking", "amount": 8420, "status": "Posted" },
+    { "date": "Apr 26, 2026", "description": "Northlane Credit Card Payment", "category": "Payment", "account": "Everyday Checking", "amount": -275, "status": "Posted" },
+    { "date": "Apr 22, 2026", "description": "Northlane Credit Card Payment", "category": "Payment", "account": "Rewards Credit", "amount": 642.59, "status": "Posted" },
+    { "date": "Apr 18, 2026", "description": "Home Internet", "category": "Bills", "account": "Everyday Checking", "amount": -78, "status": "Posted" },
+    { "date": "Apr 15, 2026", "description": "Federal Tax Refund", "category": "Income", "account": "Everyday Checking", "amount": 3500, "status": "Posted" },
+    { "date": "Apr 11, 2026", "description": "Metro Insurance", "category": "Bills", "account": "Everyday Checking", "amount": -118.34, "status": "Posted" },
+    { "date": "Apr 7, 2026", "description": "Mortgage Payment", "category": "Housing", "account": "Everyday Checking", "amount": -3200, "status": "Posted" },
+    { "date": "Mar 29, 2026", "description": "Card Purchase - Home Furnishings", "category": "Shopping", "account": "Rewards Credit", "amount": -3200, "status": "Posted" },
+    { "date": "Mar 15, 2026", "description": "Transfer to Growth Savings", "category": "Transfer", "account": "Everyday Checking", "amount": -8100, "status": "Posted" },
+    { "date": "Mar 15, 2026", "description": "Transfer from Checking", "category": "Transfer", "account": "Growth Savings", "amount": 8100, "status": "Posted" },
+    { "date": "Feb 20, 2026", "description": "Travel Reserve Deposit", "category": "Transfer", "account": "Everyday Checking", "amount": -10000, "status": "Posted" },
+    { "date": "Feb 20, 2026", "description": "Transfer from Checking", "category": "Transfer", "account": "Travel Reserve", "amount": 10000, "status": "Posted" },
+    { "date": "Jan 31, 2026", "description": "Annual Savings Interest", "category": "Interest", "account": "Growth Savings", "amount": 310.8, "status": "Posted" },
+    { "date": "Dec 18, 2025", "description": "Prescott Travel Booking", "category": "Travel", "account": "Travel Reserve", "amount": -8774.84, "status": "Posted" },
+    { "date": "Oct 2, 2025", "description": "Brokerage Transfer", "category": "Transfer", "account": "Everyday Checking", "amount": -10896.46, "status": "Posted" },
+    { "date": "Aug 20, 2025", "description": "Travel Reserve Opening Deposit", "category": "Deposit", "account": "Travel Reserve", "amount": 5000, "status": "Posted" },
+    { "date": "Jun 10, 2025", "description": "Growth Savings Opening Deposit", "category": "Deposit", "account": "Growth Savings", "amount": 20000, "status": "Posted" },
+    { "date": "Feb 15, 2025", "description": "Incoming Wire Transfer", "category": "Deposit", "account": "Everyday Checking", "amount": 125000, "status": "Posted" },
+    { "date": "Jan 3, 2024", "description": "Account Opening Deposit", "category": "Deposit", "account": "Everyday Checking", "amount": 740000, "status": "Posted" }
   ],
   "cards": [
     {

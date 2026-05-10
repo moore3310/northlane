@@ -576,6 +576,7 @@ h3 {
 
 .table-wrap {
   overflow-x: auto;
+  max-width: 100%;
 }
 
 table {
@@ -892,6 +893,62 @@ select {
   }
 }
 
+@media (max-width: 760px) {
+  .table-wrap {
+    overflow: visible;
+  }
+
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 12px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    white-space: normal;
+    text-align: right;
+  }
+
+  td:last-child {
+    border-bottom: 0;
+  }
+
+  td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  td.num {
+    text-align: right;
+  }
+}
+
 @media (max-width: 640px) {
   .login-screen {
     padding: 18px;
@@ -934,6 +991,15 @@ select {
   }
 
   .bank-card .card-number {
-    font-size: 19px;
+    font-size: 18px;
+    word-break: break-word;
+  }
+
+  .card-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .card-network {
+    font-size: 18px;
   }
 }

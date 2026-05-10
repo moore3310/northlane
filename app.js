@@ -104,16 +104,28 @@ function renderAccounts() {
 function renderTransactions(list = state.transactions) {
   const rows = list.map(item => `
     <tr>
-      <td>${item.date}</td>
-      <td><strong>${item.description}</strong></td>
-      <td>${item.category}</td>
-      <td>${item.account}</td>
-      <td class="num ${item.amount < 0 ? "negative" : "positive"}">${formatAmount(item.amount)}</td>
-      <td><span class="status-pill">${item.status}</span></td>
+      <td data-label="Date">${item.date}</td>
+      <td data-label="Description"><strong>${item.description}</strong></td>
+      <td data-label="Category">${item.category}</td>
+      <td data-label="Account">${item.account}</td>
+      <td data-label="Amount" class="num ${item.amount < 0 ? "negative" : "positive"}">${formatAmount(item.amount)}</td>
+      <td data-label="Status"><span class="status-pill">${item.status}</span></td>
     </tr>
   `).join("");
   document.querySelector("#transactionRows").innerHTML = rows;
   document.querySelector("#historyRows").innerHTML = rows;
+}
+
+async function withBusy(button, label, action) {
+  const original = button.textContent;
+  button.disabled = true;
+  button.textContent = label;
+  try {
+    return await action();
+  } finally {
+    button.disabled = false;
+    button.textContent = original;
+  }
 }
 
 function renderSpending() {
@@ -210,20 +222,23 @@ function showModal(title, text) {
 
 document.querySelector("#loginForm").addEventListener("submit", async event => {
   event.preventDefault();
+  const submitButton = event.submitter;
   const userId = document.querySelector("#loginUser").value.trim();
   const password = document.querySelector("#loginPassword").value;
   const message = document.querySelector("#loginMessage");
 
-  try {
-    await api("/api/login", { method: "POST", body: JSON.stringify({ userId, password }) });
-    message.textContent = "";
-    setSignedIn(true);
-    await loadState();
-    showPage("dashboard");
-  } catch (error) {
-    message.textContent = "The user ID or password entered is incorrect.";
-    message.className = "form-message negative";
-  }
+  await withBusy(submitButton, "Signing in", async () => {
+    try {
+      await api("/api/login", { method: "POST", body: JSON.stringify({ userId, password }) });
+      message.textContent = "";
+      setSignedIn(true);
+      await loadState();
+      showPage("dashboard");
+    } catch (error) {
+      message.textContent = "The user ID or password entered is incorrect.";
+      message.className = "form-message negative";
+    }
+  });
 });
 
 document.querySelector("#logoutBtn").addEventListener("click", async () => {
@@ -265,6 +280,7 @@ document.querySelector("#searchInput").addEventListener("input", event => {
 
 document.querySelector("#transferForm").addEventListener("submit", async event => {
   event.preventDefault();
+  const submitButton = event.submitter;
   const amount = Number(document.querySelector("#transferAmount").value);
   const fromAccount = document.querySelector("#fromAccount").value;
   const recipientChoice = document.querySelector("#toRecipient").value;
@@ -275,18 +291,20 @@ document.querySelector("#transferForm").addEventListener("submit", async event =
   const memo = document.querySelector("#transferMemo").value.trim();
   const message = document.querySelector("#transferMessage");
 
-  try {
-    applyState(await api("/api/transfer", {
-      method: "POST",
-      body: JSON.stringify({ amount, fromAccount, recipient, memo, external, routing, accountNumber })
-    }));
-    message.textContent = `Transfer of ${money.format(amount)} to ${recipient} is processing and will be completed after 2 to 3 business days.`;
-    message.className = "form-message positive";
-    showModal("Transfer Submitted", "This transaction is processing and will be completed after 2 to 3 business days.");
-  } catch (error) {
-    message.textContent = error.message;
-    message.className = "form-message negative";
-  }
+  await withBusy(submitButton, "Processing", async () => {
+    try {
+      applyState(await api("/api/transfer", {
+        method: "POST",
+        body: JSON.stringify({ amount, fromAccount, recipient, memo, external, routing, accountNumber })
+      }));
+      message.textContent = `Transfer of ${money.format(amount)} to ${recipient} is processing and will be completed after 2 to 3 business days.`;
+      message.className = "form-message positive";
+      showModal("Transfer Submitted", "This transaction is processing and will be completed after 2 to 3 business days.");
+    } catch (error) {
+      message.textContent = error.message;
+      message.className = "form-message negative";
+    }
+  });
 });
 
 document.querySelector("#exportBtn").addEventListener("click", () => {
@@ -311,9 +329,11 @@ document.querySelector("#bankCards").addEventListener("click", async event => {
   const action = button.dataset.cardAction;
 
   if (action === "freeze") {
-    const response = await api("/api/card", { method: "POST", body: JSON.stringify({ index, action }) });
-    applyState(response.state);
-    showModal("Card Control Updated", `${response.card.name} is now ${response.card.frozen ? "frozen" : "unfrozen"}.`);
+    await withBusy(button, "Updating", async () => {
+      const response = await api("/api/card", { method: "POST", body: JSON.stringify({ index, action }) });
+      applyState(response.state);
+      showModal("Card Control Updated", `${response.card.name} is now ${response.card.frozen ? "frozen" : "unfrozen"}.`);
+    });
   }
 
   if (action === "visibility") {
@@ -335,8 +355,10 @@ document.querySelector("#billList").addEventListener("click", async event => {
   if (!button) return;
   const index = Number(button.dataset.billIndex);
   const bill = state.bills[index];
-  applyState(await api("/api/bill", { method: "POST", body: JSON.stringify({ index }) }));
-  showModal("Bill Payment Scheduled", `${bill.name} is processing and will be completed after 2 to 3 business days.`);
+  await withBusy(button, "Processing", async () => {
+    applyState(await api("/api/bill", { method: "POST", body: JSON.stringify({ index }) }));
+    showModal("Bill Payment Scheduled", `${bill.name} is processing and will be completed after 2 to 3 business days.`);
+  });
 });
 
 document.querySelector("#openAccountBtn").addEventListener("click", () => {
@@ -349,26 +371,29 @@ document.querySelector("#requestCardBtn").addEventListener("click", () => {
 
 document.querySelector("#payeeForm").addEventListener("submit", async event => {
   event.preventDefault();
+  const submitButton = event.submitter;
   const message = document.querySelector("#payeeMessage");
   const name = document.querySelector("#payeeName").value.trim();
   const amount = Number(document.querySelector("#payeeAmount").value);
   const dueDate = document.querySelector("#payeeDueDate").value;
   const status = document.querySelector("#payeeStatus").value;
 
-  try {
-    applyState(await api("/api/payee", {
-      method: "POST",
-      body: JSON.stringify({ name, amount, dueDate, status })
-    }));
-    event.target.reset();
-    document.querySelector("#payeeDueDate").valueAsDate = new Date();
-    message.textContent = `${name} was added to bill pay.`;
-    message.className = "form-message positive";
-    showModal("Payee Added", `${name} was added to the bill list.`);
-  } catch (error) {
-    message.textContent = error.message;
-    message.className = "form-message negative";
-  }
+  await withBusy(submitButton, "Adding", async () => {
+    try {
+      applyState(await api("/api/payee", {
+        method: "POST",
+        body: JSON.stringify({ name, amount, dueDate, status })
+      }));
+      event.target.reset();
+      document.querySelector("#payeeDueDate").valueAsDate = new Date();
+      message.textContent = `${name} was added to bill pay.`;
+      message.className = "form-message positive";
+      showModal("Payee Added", `${name} was added to the bill list.`);
+    } catch (error) {
+      message.textContent = error.message;
+      message.className = "form-message negative";
+    }
+  });
 });
 
 document.querySelector("#saveSecurityBtn").addEventListener("click", () => {
@@ -381,10 +406,14 @@ async function init() {
   document.querySelector("#toRecipient").addEventListener("change", event => {
     document.querySelector("#externalFields").hidden = event.target.value !== "external";
   });
-  const session = await api("/api/session");
-  setSignedIn(session.signedIn);
-  if (session.signedIn) {
-    await loadState();
+  try {
+    const session = await api("/api/session");
+    setSignedIn(session.signedIn);
+    if (session.signedIn) {
+      await loadState();
+    }
+  } catch {
+    setSignedIn(false);
   }
 }
 
