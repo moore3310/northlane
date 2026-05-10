@@ -1,8 +1,3 @@
-const savedUser = {
-  id: "mary.wyman",
-  password: "Northlane2026"
-};
-
 const spending = [
   { label: "Housing", value: 1680, pct: 84 },
   { label: "Groceries", value: 624, pct: 48 },
@@ -229,11 +224,6 @@ document.querySelector("#loginForm").addEventListener("submit", async event => {
     message.textContent = "The user ID or password entered is incorrect.";
     message.className = "form-message negative";
   }
-});
-
-document.querySelector("#fillCredentials").addEventListener("click", () => {
-  document.querySelector("#loginUser").value = savedUser.id;
-  document.querySelector("#loginPassword").value = savedUser.password;
 });
 
 document.querySelector("#logoutBtn").addEventListener("click", async () => {

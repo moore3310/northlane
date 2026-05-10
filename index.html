@@ -28,15 +28,14 @@
         </div>
         <label>
           User ID
-          <input id="loginUser" autocomplete="off" value="mary.wyman" required>
+          <input id="loginUser" autocomplete="username" placeholder="User ID" required>
         </label>
         <label>
           Password
-          <input id="loginPassword" type="password" autocomplete="off" value="Northlane2026" required>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password" required>
         </label>
         <div class="login-row">
           <label class="check-row"><input type="checkbox" checked> Remember user ID</label>
-          <button class="text-btn" type="button" id="fillCredentials">Use saved ID</button>
         </div>
         <button class="primary-btn" type="submit">Sign In</button>
         <p class="form-message" id="loginMessage" aria-live="polite"></p>
