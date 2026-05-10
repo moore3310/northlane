@@ -10,12 +10,12 @@ const dataFile = path.join(root, "data.json");
 const sessions = new Map();
 
 const user = {
-  id: "alex.morgan",
-  name: "Alex Morgan",
-  initials: "AM",
-  email: "alex.morgan@example.test",
+  id: "mary.wyman",
+  name: "Mary Wyman",
+  initials: "MW",
+  email: "mary.wyman@example.test",
   phone: "(555) 014-2288",
-  address: "1240 Market Street, Seattle, WA",
+  address: "6995 Highway 29 N, Prescott, AR 71857",
   customerId: "NB-482910",
   salt: "northlane-secure-local",
   passwordHash: crypto.pbkdf2Sync("Northlane2026", "northlane-secure-local", 120000, 32, "sha256").toString("hex")
@@ -23,7 +23,7 @@ const user = {
 
 const defaultData = {
   accounts: [
-    { name: "Everyday Checking", type: "Checking", balance: 12840.52, number: "**** 4821", routing: "071000013", limit: "$5,000/day", status: "Active" },
+    { name: "Everyday Checking", type: "Checking", balance: 850000, number: "**** 4821", routing: "071000013", limit: "$5,000/day", status: "Active" },
     { name: "Growth Savings", type: "Savings", balance: 28410.8, number: "**** 9274", routing: "071000013", limit: "$10,000/day", status: "Active" },
     { name: "Travel Reserve", type: "Savings", balance: 6225.16, number: "**** 6630", routing: "071000013", limit: "$2,500/day", status: "Active" },
     { name: "Rewards Credit", type: "Credit", balance: -2750.45, number: "**** 1188", routing: "N/A", limit: "$20,000", status: "Payment due" }
@@ -38,7 +38,7 @@ const defaultData = {
     { date: "May 3, 2026", description: "Blue Harbor Cafe", category: "Dining", account: "Rewards Credit", amount: -61.72, status: "Posted" }
   ],
   cards: [
-    { name: "Northlane Debit", kind: "debit", number: "4532 8841 7394 2086", holder: "Alex Morgan", detailLabel: "Expires", detail: "08/29", status: "Unlocked", frozen: false },
+    { name: "Northlane Debit", kind: "debit", number: "4532 8841 7394 2086", holder: "Mary Wyman", detailLabel: "Expires", detail: "08/29", status: "Unlocked", frozen: false },
     { name: "Rewards Credit", kind: "credit", number: "5424 1188 4208 7731", holder: "$17,250.00", detailLabel: "Due date", detail: "May 22", status: "Payment due", frozen: false }
   ],
   bills: [

@@ -1,5 +1,5 @@
 const savedUser = {
-  id: "alex.morgan",
+  id: "mary.wyman",
   password: "Northlane2026"
 };
 
@@ -143,7 +143,7 @@ function renderCards() {
       <div class="card-chip" aria-hidden="true"></div>
       <p class="card-number">${cardsVisible ? card.number : maskCardNumber(card.number)}</p>
       <footer class="card-footer">
-        <div><span>Cardholder</span><strong>${card.kind === "credit" ? "Alex Morgan" : card.holder}</strong></div>
+        <div><span>Cardholder</span><strong>${state.user.name || card.holder}</strong></div>
         <div><span>Valid thru</span><strong>${card.detailLabel === "Expires" ? card.detail : "11/29"}</strong></div>
         <strong class="card-network">${card.kind === "credit" ? "Mastercard" : "Visa"}</strong>
       </footer>

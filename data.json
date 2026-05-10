@@ -3,7 +3,7 @@
     {
       "name": "Everyday Checking",
       "type": "Checking",
-      "balance": 10332.72,
+      "balance": 850000,
       "number": "**** 4821",
       "routing": "071000013",
       "limit": "$5,000/day",
@@ -116,7 +116,7 @@
       "name": "Northlane Debit",
       "kind": "debit",
       "number": "4532 8841 7394 2086",
-      "holder": "Alex Morgan",
+      "holder": "Mary Wyman",
       "detailLabel": "Expires",
       "detail": "08/29",
       "status": "Unlocked",
